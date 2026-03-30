@@ -1,0 +1,6 @@
+Una estructura de datos  estática  es aquellas cuyo tamaño se define al crearla y no se puede cambiar al ya estar ejecutándose.
+La inspección no es posible directamente debido al tamaño dijo sin embargo se simula desplazando elementos a la derecha .
+Actualizar un elemento en un arreglo llendo al índice deseado y cambiando el valor .
+Eliminación desplazando elementos a la izquierda  simula la eliminación no afecta al arreglo original .
+Recorre arreglo mediante bucles for foreach y do while
+Copiar un arreglo es crear un nuevo arreglo con los mismo elementos 
