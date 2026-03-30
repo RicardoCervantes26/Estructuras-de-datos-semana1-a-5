@@ -1,4 +1,4 @@
-Estructura de datos: Una estructura de datos es una forma que se puedan almacenar datos y realizar operaciones de manera eficiente y esta estructura de datos tiene y las computadoras almacenan los datos en la memoria RAM 
+Estructura de datos: Una estructura de datos es una forma que se puedan almacenar datos y realizar operaciones de manera eficiente y las computadoras almacenan los datos en la memoria RAM 
 SE DIVIDEN EN ESTATITICAS Y DINAMICAS:
 LAS ESTATICAS: no se puede cambiar el tiempo de copilacion como arreglos y matrizes
 LAS DINAMICAS: se puede cambiar el tiempo de copilacion y estos mismos se dividen en :
