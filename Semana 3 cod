@@ -1,0 +1,35 @@
+import java.util.Arrays;
+
+public class OperacionesBasicas {
+    public static void main(String[] args) {
+
+        // 1. Definición de arreglos iniciales
+        int[] arreglo1 = {1, 2, 3};
+        int[] arreglo2 = {4, 5, 6};
+        int[] arregloIgualA1 = {1, 2, 3};
+
+        // --- OPERACIÓN: COMPARACIÓN ---
+        // Verifica si tienen la misma longitud y elementos idénticos
+        boolean sonIguales = Arrays.equals(arreglo1, arregloIgualA1);
+        System.out.println("¿Arreglo 1 es igual al de prueba?: " + sonIguales);
+
+        // --- OPERACIÓN: CLONACIÓN ---
+        // Crea una copia exacta para modificarla sin alterar el original
+        int[] copiaArreglo1 = arreglo1.clone();
+        // También se puede usar: Arrays.copyOf(arreglo1, arreglo1.length);
+
+        System.out.println("Copia del Arreglo 1: " + Arrays.toString(copiaArreglo1));
+
+        // --- OPERACIÓN: FUSIÓN (CONCATENACIÓN) ---
+        // Combinar arreglo1 y arreglo2 en uno nuevo
+        int[] fusionado = new int[arreglo1.length + arreglo2.length];
+
+        // Copia el primer arreglo desde la posición 0
+        System.arraycopy(arreglo1, 0, fusionado, 0, arreglo1.length);
+
+        // Copia el segundo arreglo a continuación del primero
+        System.arraycopy(arreglo2, 0, fusionado, arreglo1.length, arreglo2.length);
+
+        System.out.println("Arreglo Final (Fusión): " + Arrays.toString(fusionado));
+    }
+}
