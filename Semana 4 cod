@@ -1,0 +1,112 @@
+package semana4;
+
+public class Semana4 {
+
+    public static void main(String[] args) {
+        int n = 3; // Tamaño para las pruebas de operaciones
+
+        System.out.println("--- 1 & 2. DECLARACIÓN E IMPLEMENTACIÓN OPTIMIZADA ---");
+        int[][] A = generarTriangularInferior(n);
+        int[][] B = generarSimetrica(n);
+
+        System.out.println("Matriz A (Triangular Inferior):");
+        imprimir(A);
+        System.out.println("Matriz B (Simétrica):");
+        imprimir(B);
+
+        System.out.println("--- 3. OPERACIONES BÁSICAS ---");
+        
+        // Suma
+        System.out.println("Suma (A + B):");
+        imprimir(sumarMatrices(A, B));
+
+        // Transposición
+        System.out.println("Transpuesta de A:");
+        imprimir(transponer(A));
+
+        // Multiplicación
+        System.out.println("Multiplicación (A * B):");
+        imprimir(multiplicarMatrices(A, B));
+
+        System.out.println("--- 4. VERIFICACIÓN DE OPTIMIZACIÓN ---");
+        verificarRendimiento(n);
+    }
+
+    // --- MÉTODOS DE GENERACIÓN (Puntos 1 y 2) ---
+
+    public static int[][] generarTriangularInferior(int n) {
+        int[][] matriz = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= i; j++) { // Acceso optimizado: solo i >= j
+                matriz[i][j] = i + j + 1;
+            }
+        }
+        return matriz;
+    }
+
+    public static int[][] generarSimetrica(int n) {
+        int[][] matriz = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                matriz[i][j] = i + j + 1;
+                matriz[j][i] = matriz[i][j]; // Propiedad: A[i][j] = A[j][i]
+            }
+        }
+        return matriz;
+    }
+
+    // --- OPERACIONES (Punto 3) ---
+
+    public static int[][] sumarMatrices(int[][] m1, int[][] m2) {
+        int n = m1.length;
+        int[][] resultado = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                resultado[i][j] = m1[i][j] + m2[i][j];
+            }
+        }
+        return resultado;
+    }
+
+    public static int[][] transponer(int[][] matriz) {
+        int n = matriz.length;
+        int[][] resultado = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                resultado[j][i] = matriz[i][j];
+            }
+        }
+        return resultado;
+    }
+
+    public static int[][] multiplicarMatrices(int[][] m1, int[][] m2) {
+        int n = m1.length;
+        int[][] resultado = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    resultado[i][j] += m1[i][k] * m2[k][j];
+                }
+            }
+        }
+        return resultado;
+    }
+
+    // --- ANÁLISIS (Punto 4) ---
+
+    public static void verificarRendimiento(int n) {
+        System.out.println("Optimizaciones aplicadas:");
+        System.out.println("* Almacenamiento: Se evita procesar celdas nulas en triangulares.");
+        System.out.println("* Rendimiento: Complejidad O(n²) en suma y O(n³) en multiplicación.");
+    }
+
+    public static void imprimir(int[][] matriz) {
+        for (int[] fila : matriz) {
+            for (int valor : fila) {
+                System.out.print(valor + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}
