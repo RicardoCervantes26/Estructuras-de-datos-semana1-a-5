@@ -3,107 +3,119 @@ package semana4;
 public class Semana4 {
 
     public static void main(String[] args) {
-        int n = 3; // Tamaño para las pruebas de operaciones
-
-        System.out.println("--- 1 & 2. DECLARACIÓN E IMPLEMENTACIÓN OPTIMIZADA ---");
-        int[][] A = generarTriangularInferior(n);
-        int[][] B = generarSimetrica(n);
-
-        System.out.println("Matriz A (Triangular Inferior):");
-        imprimir(A);
-        System.out.println("Matriz B (Simétrica):");
-        imprimir(B);
-
-        System.out.println("--- 3. OPERACIONES BÁSICAS ---");
         
-        // Suma
-        System.out.println("Suma (A + B):");
-        imprimir(sumarMatrices(A, B));
+        System.out.println("--- 1. DECLARACION DE MATRICES CON VALORES FIJOS ---");
 
-        // Transposición
-        System.out.println("Transpuesta de A:");
-        imprimir(transponer(A));
+        // Matriz Simetrica: m[i][j] == m[j][i]
+        int[][] simetrica = {
+            {1, 5, 9},
+            {5, 2, 8},
+            {9, 8, 3}
+        };
 
-        // Multiplicación
-        System.out.println("Multiplicación (A * B):");
-        imprimir(multiplicarMatrices(A, B));
+        // Matriz Triangular Inferior: Valores solo debajo y en la diagonal
+        int[][] t_inferior = {
+            {4, 0, 0},
+            {7, 1, 0},
+            {6, 3, 9}
+        };
 
-        System.out.println("--- 4. VERIFICACIÓN DE OPTIMIZACIÓN ---");
-        verificarRendimiento(n);
-    }
+        // Matriz Triangular Superior: Valores solo encima y en la diagonal
+        int[][] t_superior = {
+            {2, 4, 6},
+            {0, 5, 1},
+            {0, 0, 8}
+        };
 
-    // --- MÉTODOS DE GENERACIÓN (Puntos 1 y 2) ---
+        // Matriz Diagonal: Valores solo en la diagonal principal
+        int[][] diagonal = {
+            {7, 0, 0},
+            {0, 4, 0},
+            {0, 0, 1}
+        };
 
-    public static int[][] generarTriangularInferior(int n) {
-        int[][] matriz = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= i; j++) { // Acceso optimizado: solo i >= j
-                matriz[i][j] = i + j + 1;
-            }
+        System.out.println("Matriz Simetrica:");
+        imprimir(simetrica);
+        System.out.println("Matriz Triangular Inferior:");
+        imprimir(t_inferior);
+        System.out.println("Matriz Triangular Superior:");
+        imprimir(t_superior);
+        System.out.println("Matriz Diagonal:");
+        imprimir(diagonal);
+
+        System.out.println("--- 2. VALIDACION Y OPERACIONES ---");
+
+        // Verificamos dimensiones antes de operar
+        if (sonCuadradasYCompatibles(simetrica, t_inferior)) {
+            
+            System.out.println("Suma (Simetrica + Triangular Inferior):");
+            imprimir(sumarMatrices(simetrica, t_inferior));
+
+            System.out.println("Multiplicacion (Diagonal * Triangular Superior):");
+            imprimir(multiplicarMatrices(diagonal, t_superior));
+
+            System.out.println("Transpuesta de la Triangular Inferior (Resultado esperado: Superior):");
+            imprimir(transponer(t_inferior));
+            
+        } else {
+            System.out.println("Error: Las matrices no son cuadradas o no tienen el mismo tamaño.");
         }
-        return matriz;
     }
 
-    public static int[][] generarSimetrica(int n) {
-        int[][] matriz = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                matriz[i][j] = i + j + 1;
-                matriz[j][i] = matriz[i][j]; // Propiedad: A[i][j] = A[j][i]
-            }
-        }
-        return matriz;
+    // --- METODOS DE VALIDACION ---
+
+    public static boolean sonCuadradasYCompatibles(int[][] m1, int[][] m2) {
+        // Verifica que m1 sea cuadrada
+        if (m1.length != m1[0].length) return false;
+        // Verifica que m2 sea cuadrada
+        if (m2.length != m2[0].length) return false;
+        // Verifica que tengan el mismo tamaño entre ellas
+        return m1.length == m2.length;
     }
 
-    // --- OPERACIONES (Punto 3) ---
+    // --- METODOS DE OPERACION ---
 
     public static int[][] sumarMatrices(int[][] m1, int[][] m2) {
         int n = m1.length;
-        int[][] resultado = new int[n][n];
+        int[][] res = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                resultado[i][j] = m1[i][j] + m2[i][j];
+                res[i][j] = m1[i][j] + m2[i][j];
             }
         }
-        return resultado;
+        return res;
     }
 
-    public static int[][] transponer(int[][] matriz) {
-        int n = matriz.length;
-        int[][] resultado = new int[n][n];
+    public static int[][] transponer(int[][] m) {
+        int n = m.length;
+        int[][] res = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                resultado[j][i] = matriz[i][j];
+                res[j][i] = m[i][j];
             }
         }
-        return resultado;
+        return res;
     }
 
     public static int[][] multiplicarMatrices(int[][] m1, int[][] m2) {
         int n = m1.length;
-        int[][] resultado = new int[n][n];
+        int[][] res = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 for (int k = 0; k < n; k++) {
-                    resultado[i][j] += m1[i][k] * m2[k][j];
+                    res[i][j] += m1[i][k] * m2[k][j];
                 }
             }
         }
-        return resultado;
+        return res;
     }
 
-    // --- ANÁLISIS (Punto 4) ---
-
-    public static void verificarRendimiento(int n) {
-        System.out.println("Optimizaciones aplicadas:");
-        System.out.println("* Almacenamiento: Se evita procesar celdas nulas en triangulares.");
-        System.out.println("* Rendimiento: Complejidad O(n²) en suma y O(n³) en multiplicación.");
-    }
+    // --- METODO DE IMPRESION ---
 
     public static void imprimir(int[][] matriz) {
-        for (int[] fila : matriz) {
-            for (int valor : fila) {
-                System.out.print(valor + "\t");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.print(matriz[i][j] + "\t");
             }
             System.out.println();
         }
