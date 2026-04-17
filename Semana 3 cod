@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.Arrays; // Solo lo usamos para imprimir el resultado final de forma bonita
 
 public class OperacionesBasicas {
     public static void main(String[] args) {
@@ -9,26 +9,42 @@ public class OperacionesBasicas {
         int[] arregloIgualA1 = {1, 2, 3};
 
         // --- OPERACIÓN: COMPARACIÓN ---
-        // Verifica si tienen la misma longitud y elementos idénticos
-        boolean sonIguales = Arrays.equals(arreglo1, arregloIgualA1);
+        boolean sonIguales = true;
+        
+        // Primero verificamos si tienen el mismo tamaño
+        if (arreglo1.length != arregloIgualA1.length) {
+            sonIguales = false;
+        } else {
+            // Comparamos elemento por elemento
+            for (int i = 0; i < arreglo1.length; i++) {
+                if (arreglo1[i] != arregloIgualA1[i]) {
+                    sonIguales = false;
+                    break; // Si uno falla, ya no necesitamos seguir revisando
+                }
+            }
+        }
         System.out.println("¿Arreglo 1 es igual al de prueba?: " + sonIguales);
 
         // --- OPERACIÓN: CLONACIÓN ---
-        // Crea una copia exacta para modificarla sin alterar el original
-        int[] copiaArreglo1 = arreglo1.clone();
-        // También se puede usar: Arrays.copyOf(arreglo1, arreglo1.length);
-
+        int[] copiaArreglo1 = new int[arreglo1.length];
+        
+        for (int i = 0; i < arreglo1.length; i++) {
+            copiaArreglo1[i] = arreglo1[i];
+        }
         System.out.println("Copia del Arreglo 1: " + Arrays.toString(copiaArreglo1));
 
         // --- OPERACIÓN: FUSIÓN (CONCATENACIÓN) ---
-        // Combinar arreglo1 y arreglo2 en uno nuevo
         int[] fusionado = new int[arreglo1.length + arreglo2.length];
 
-        // Copia el primer arreglo desde la posición 0
-        System.arraycopy(arreglo1, 0, fusionado, 0, arreglo1.length);
+        // Primer for: Meter los elementos del primer arreglo
+        for (int i = 0; i < arreglo1.length; i++) {
+            fusionado[i] = arreglo1[i];
+        }
 
-        // Copia el segundo arreglo a continuación del primero
-        System.arraycopy(arreglo2, 0, fusionado, arreglo1.length, arreglo2.length);
+        // Segundo for: Meter los del segundo arreglo empezando donde terminó el anterior
+        for (int i = 0; i < arreglo2.length; i++) {
+            fusionado[arreglo1.length + i] = arreglo2[i];
+        }
 
         System.out.println("Arreglo Final (Fusión): " + Arrays.toString(fusionado));
     }
