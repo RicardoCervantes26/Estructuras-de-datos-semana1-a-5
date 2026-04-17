@@ -1,0 +1,17 @@
+
+1. Conceptos Fundamentales
+Definición: Los arreglos unidimensionales (vectores) permiten almacenar y gestionar colecciones de datos del mismo tipo de manera eficiente.
+Utilidad: Facilitan el acceso y la manipulación de datos relacionados, permitiendo organizarlos para recuperarlos y modificarlos rápidamente.
+2. Operaciones Principales
+ A. Comparación de Arreglos
+Para determinar si dos arreglos son idénticos, se deben cumplir dos condiciones estrictas:
+1.Deben tener la misma longitud.
+2.Cada uno de sus elementos correspondientes debe ser idéntico al ser comparados uno por uno.
+B. Clonación de Arreglos
+La clonación consiste en crear una copia exacta de un arreglo existente.
+•Propósito: Es fundamental cuando se necesita realizar modificaciones en los datos sin alterar el arreglo original.
+•Métodos en Java: Se puede utilizar el método .clone() o la función Arrays.copyOf().
+C. Fusión (Concatenación)
+Esta operación consiste en combinar dos o más arreglos para formar uno solo.
+•Procedimiento: Generalmente se realiza mediante la concatenación, donde los elementos de los arreglos originales se colocan secuencialmente en un nuevo arreglo de mayor capacidad.
+

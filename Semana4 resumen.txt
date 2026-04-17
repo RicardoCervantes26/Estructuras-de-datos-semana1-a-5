@@ -1,0 +1,22 @@
+1. Conceptos Fundamentales
+•Matrices Cuadradas: Son aquellas donde el número de filas es idéntico al número de columnas.
+•Logro de Aprendizaje: El objetivo es que el estudiante manipule e implemente matrices cuadradas, poco densas (triangulares y tridiagonales), simétricas y asimétricas en Java.
+
+2. Matrices Poco Densas (Triangulares y Tridiagonales)
+Estas matrices se caracterizan por tener una gran cantidad de elementos iguales a cero, lo que permite optimizar procesos.
+•Matriz Triangular Inferior:
+Definición: Todos los elementos situados por encima de la diagonal principal son cero.
+Utilidad: Facilita cálculos que solo requieren la parte inferior de la estructura.
+•Matriz Triangular Superior:
+Definición: Todos los elementos por debajo de la diagonal principal son cero.
+•Matriz Tridiagonal:
+Definición: Solo poseen elementos distintos a cero en la diagonal principal, la diagonal superior inmediata y la diagonal inferior inmediata.
+Beneficio: Proporcionan un ahorro significativo de memoria al almacenar únicamente los elementos necesarios.
+
+3. Matrices Simétricas y Asimétricas
+Se clasifican según la relación con su transpuesta:
+•Matriz Simétrica:
+Propiedad: Es igual a su transpuesta; es decir, el elemento en la posición [i][j] es igual al de la posición [j][i].
+Ventaja: Simplifica notablemente los cálculos en aplicaciones matemáticas al reducir la complejidad de las operaciones.
+•Matriz Asimétrica:
+Definición: Es cualquier matriz que no cumple con la propiedad de simetría (no es igual a su transpuesta).
