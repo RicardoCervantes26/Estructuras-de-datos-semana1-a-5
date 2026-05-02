@@ -1,76 +1,95 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
 
-public class InventarioRE7 {
+public class Main {
+
+    // 1. IMPLEMENTACIÓN DE COLA USANDO ARREGLOS CIRCULARES (Munición en Tambor)
+    static class ColaCircular {
+        int[] slots;
+        int frente, fin, tamano, capacidad;
+
+        public ColaCircular(int capacidad) {
+            this.capacidad = capacidad;
+            slots = new int[capacidad];
+            frente = 0;
+            tamano = 0;
+            fin = capacidad - 1;
+        }
+
+        public void enqueue(int bala) {
+            if (tamano == capacidad) return;
+            fin = (fin + 1) % capacidad;
+            slots[fin] = bala;
+            tamano++;
+            System.out.println("-> Bala " + bala + " cargada en tambor.");
+        }
+
+        public int dequeue() {
+            if (tamano == 0) return -1;
+            int bala = slots[frente];
+            frente = (frente + 1) % capacidad;
+            tamano--;
+            return bala;
+        }
+    }
+
+    // 2. IMPLEMENTACIÓN DE COLA USANDO LISTAS ENLAZADAS (Fila de Enemigos)
+    static class Nodo {
+        String nombre;
+        Nodo siguiente;
+        Nodo(String nombre) { this.nombre = nombre; }
+    }
+
+    static class ColaListaEnlazada {
+        Nodo frente, fin;
+
+        public void enqueue(String enemigo) {
+            Nodo nuevo = new Nodo(enemigo);
+            if (fin == null) {
+                frente = fin = nuevo;
+            } else {
+                fin.siguiente = nuevo;
+                fin = nuevo;
+            }
+            System.out.println("-> " + enemigo + " ha aparecido.");
+        }
+
+        public String dequeue() {
+            if (frente == null) return null;
+            String nombre = frente.nombre;
+            frente = frente.siguiente;
+            if (frente == null) fin = null;
+            return nombre;
+        }
+    }
 
     public static void main(String[] args) {
 
-        // ==========================================================
-        // 1. ESTRUCTURA ESTÁTICA: El Baúl de Objetos (Slot limitado)
-        // ==========================================================
-        System.out.println("--- BAÚL DE OBJETOS (ESTÁTICO) ---");
-        // El baúl tiene espacios fijos definidos por el sistema
-        String[] baul = new String[4]; 
-        baul[0] = "Escopeta M21";
-        baul[1] = "Manivela";
-        baul[2] = "Llave de Escorpión";
+        // 4. PROBAR OPERACIONES ENQUEUE Y DEQUEUE
 
-        // SIMULACIÓN DE INSERCIÓN: Mover objetos para organizar
-        // Queremos poner "Fluido Químico" en el slot 1 (desplazando el resto)
-        System.out.println("-> Guardando Fluido Químico en el slot 1...");
-        for (int i = 3; i > 1; i--) {
-            baul[i] = baul[i - 1];
-        }
-        baul[1] = "Fluido Químico";
+        // Prueba Cola Circular
+        System.out.println("--- 1. COLA CIRCULAR (RECARGA) ---");
+        ColaCircular revolver = new ColaCircular(3);
+        revolver.enqueue(43);//Balas nomales
+        revolver.enqueue(17);//Balas reforzadas
+        System.out.println("Disparo bala: " + revolver.dequeue());
 
-        // SIMULACIÓN DE ELIMINACIÓN: Sacar la Manivela (estaba en el slot 2)
-        System.out.println("-> Sacando la Manivela del baúl...");
-        baul[2] = null; 
-        // Desplazamos para que no quede el hueco vacío en medio
-        for (int i = 2; i < 3; i++) {
-            baul[i] = baul[i + 1];
-        }
-        baul[3] = null;
+        // Prueba Lista Enlazada
+        System.out.println("\n--- 2. COLA LISTA ENLAZADA (ENEMIGOS) ---");
+        ColaListaEnlazada horda = new ColaListaEnlazada();
+        horda.enqueue("Molded A");
+        horda.enqueue("Molded B");
+        System.out.println("Eliminado: " + horda.dequeue());
 
-        // RECORRIDO DEL BAÚL
-        System.out.print("Slots ocupados en el Baúl: ");
-        for (String item : baul) {
-            if (item != null) System.out.print("[" + item + "] ");
-        }
-        System.out.println("\n");
+        // 3. IMPLEMENTAR COLA CON PRIORIDAD (Suministros de Emergencia)
+        System.out.println("\n--- 3. COLA CON PRIORIDAD (SUMINISTROS) ---");
+        PriorityQueue<String> suministros = new PriorityQueue<>();
+        // Java ordena strings alfabéticamente; usamos números para forzar la prioridad
+        suministros.add("2. Munición");
+        suministros.add("1. Hierba Roja"); // Mayor prioridad
+        suministros.add("3. Ganzúa");
 
-
-        // ==========================================================
-        // 2. ESTRUCTURA DINÁMICA: Inventario de Ethan (Con Mochilas)
-        // ==========================================================
-        System.out.println("--- INVENTARIO DE ETHAN (DINÁMICO) ---");
-        ArrayList<String> inventarioEthan = new ArrayList<>();
-
-        // Ethan empieza con lo básico
-        inventarioEthan.add("Cuchillo");
-        inventarioEthan.add("Pistola G17");
-        inventarioEthan.add("Hierba");
-
-        // INSERCIÓN REAL: Encuentras una Ganzúa y la guardas rápido
-        System.out.println("-> Recogiste una Ganzúa.");
-        inventarioEthan.add(1, "Ganzúa"); // Se inserta en la posición 1
-
-        // ELIMINACIÓN REAL: Usas la Hierba para curarte
-        System.out.println("-> Usaste la Hierba. (+ Salud)");
-        inventarioEthan.remove("Hierba");
-
-        // RECORRIDO DEL INVENTARIO
-        System.out.println("Objetos en posesión:");
-        for (String item : inventarioEthan) {
-            System.out.println("- " + item);
-        }
-
-        // EL "ESPACIO ILIMITADO" (Simulando encontrar mochilas)
-        System.out.println("\n-> ¡Encontraste una mochila! El inventario se expande.");
-        inventarioEthan.add("Munición de Escopeta");
-        inventarioEthan.add("Combustible");
-        inventarioEthan.add("Cabeza de Perro Blanca");
-        
-        System.out.println("Total de objetos cargados: " + inventarioEthan.size());
+        System.out.println("Usando prioridad: " + suministros.poll()); // Dequeue
+        System.out.println("Siguiente en prioridad: " + suministros.poll());
     }
 }
