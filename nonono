@@ -1,0 +1,121 @@
+import java.util.LinkedList;
+
+public class Main {
+    public static void main(String[] args) {
+        // --- 4. PROBAR OPERACIONES ENQUEUE Y DEQUEUE ---
+        
+        System.out.println("--- 1. COLA CIRCULAR (Arreglos) ---");
+        ColaCircular cc = new ColaCircular(3);
+        cc.enqueue(10); cc.enqueue(20); cc.enqueue(30);
+        System.out.println("Sale: " + cc.dequeue()); // 10
+        cc.enqueue(40); // Entra en el espacio liberado circularmente
+        cc.mostrar();
+
+        System.out.println("\n--- 2. COLA SIMPLE (Listas Enlazadas) ---");
+        ColaLista cl = new ColaLista();
+        cl.enqueue(100); cl.enqueue(200);
+        System.out.println("Sale: " + cl.dequeue()); // 100
+        cl.mostrar();
+
+        System.out.println("\n--- 3. COLA CON PRIORIDAD ---");
+        ColaPrioridad cp = new ColaPrioridad();
+        cp.enqueue(5); cp.enqueue(50); cp.enqueue(25);
+        System.out.println("Sale (Mayor prioridad): " + cp.dequeue()); // 50
+        cp.mostrar();
+    }
+}
+
+// 1. Implementación con Arreglo Circular
+class ColaCircular {
+    private int[] arreglo;
+    private int frente, fin, tam, capacidad;
+
+    public ColaCircular(int cap) {
+        this.capacidad = cap;
+        this.arreglo = new int[cap];
+        this.frente = 0; this.fin = -1; this.tam = 0;
+    }
+
+    public void enqueue(int valor) {
+        if (tam == capacidad) {
+            System.out.println("Cola llena");
+            return;
+        }
+        // Pauta de Seguridad: Índice circular mediante módulo
+        fin = (fin + 1) % capacidad;
+        arreglo[fin] = valor;
+        tam++;
+    }
+
+    public int dequeue() {
+        if (tam == 0) return -1;
+        int valor = arreglo[frente];
+        frente = (frente + 1) % capacidad;
+        tam--;
+        return valor;
+    }
+
+    public void mostrar() {
+        System.out.print("Contenido: ");
+        for (int i = 0; i < tam; i++) {
+            System.out.print(arreglo[(frente + i) % capacidad] + " ");
+        }
+        System.out.println();
+    }
+}
+
+// 2. Implementación con Listas Enlazadas
+class Nodo {
+    int dato; Nodo sig;
+    Nodo(int d) { this.dato = d; }
+}
+
+class ColaLista {
+    private Nodo frente, fin;
+
+    public void enqueue(int valor) {
+        Nodo nuevo = new Nodo(valor);
+        if (fin == null) { frente = fin = nuevo; return; }
+        fin.sig = nuevo;
+        fin = nuevo;
+    }
+
+    public int dequeue() {
+        if (frente == null) return -1;
+        int valor = frente.dato;
+        // Pauta de Seguridad: Al mover el puntero, se libera el nodo previo
+        frente = frente.sig;
+        if (frente == null) fin = null;
+        return valor;
+    }
+
+    public void mostrar() {
+        System.out.print("Contenido: ");
+        Nodo temp = frente;
+        while (temp != null) {
+            System.out.print(temp.dato + " ");
+            temp = temp.sig;
+        }
+        System.out.println();
+    }
+}
+
+// 3. Implementación con Prioridad
+class ColaPrioridad {
+    private LinkedList<Integer> lista = new LinkedList<>();
+
+    public void enqueue(int valor) {
+        int i = 0;
+        // Inserción ordenada: Mayor valor tiene mayor prioridad
+        while (i < lista.size() && lista.get(i) > valor) i++;
+        lista.add(i, valor);
+    }
+
+    public int dequeue() {
+        return lista.isEmpty() ? -1 : lista.removeFirst();
+    }
+
+    public void mostrar() {
+        System.out.println("Contenido (priorizado): " + lista);
+    }
+}
